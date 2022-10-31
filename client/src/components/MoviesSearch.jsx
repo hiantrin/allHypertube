@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 const MoviesSearch = ({ movies }) => {
 	const [showDetails, setShowDetails] = useState(0)
+	const navigate = useNavigate()
+
     return (
     	<div className='w-full flex flex-wrap  gap-5 justify-center'>
         	{movies.map((element, id) => {
@@ -16,7 +19,7 @@ const MoviesSearch = ({ movies }) => {
 							<h1 className='text-white text-md w-full text-ellipsis overflow-hidden '>
 								{element.genres.map((element, id) => {return (`${element},`)})}
 							</h1>
-							<button className='text-md p-2 rounded-sm' >View Details</button>
+							<button className='text-md p-2 rounded-sm' onClick={() => navigate(`/movie/${element.id}`)}>View Details</button>
 							<h1 className='text-white text-md truncate break-words max-w-[90%]'>{element.title}</h1>
 							<h1 className='text-white text-md'>{element.year}</h1>
 						</div>

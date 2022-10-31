@@ -72,7 +72,7 @@ const Signin = () => {
 		}
 		else{ 
 			localStorage.setItem('authToken', res.data.data.token);
-			navigate("/user/profile")
+			navigate("/library")
 		}
 	}
 

@@ -88,7 +88,9 @@ const Library = () => {
     }
 
     const searchBy = () => {
-        const string = `limit=50&genre=${gender}&minimum_rating=${rating}`
+        const sortBy = Object.keys(sort).filter((item) => sort[item] === true)
+        sortBy[0] = sortBy[0].toLowerCase()
+        const string = `limit=50&sort_by=${sortBy[0]}&genre=${gender === 'All' ? "" : gender}&minimum_rating=${rating}`
         getMovies(string)
     }
 

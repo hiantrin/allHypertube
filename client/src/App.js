@@ -18,6 +18,7 @@ import { useDispatch} from "react-redux";
 import { addUserData} from "./components/redux/reducers/userSlice";
 import { addUserLog } from "./components/redux/reducers/userLog";
 import Library from "./components/Library";
+import MoviePage from "./components/MoviePage";
 
 function App() {
 	const location = useLocation();
@@ -89,7 +90,8 @@ function App() {
 					</Route>
 					<Route path="/" element={<PrivateRoutes auth={auth} />}>
 						<Route path='/user/profile' element={<Profile />} />
-						<Route path='/Library' element={<Library />} />
+						<Route path='/library' element={<Library />} />
+						<Route path='/movie/:slug' element={<MoviePage />} />
 					</Route>
 				</Routes>
 		</div>
