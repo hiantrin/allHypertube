@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import Flag from 'react-flagkit';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserLog, getUserLog } from './redux/reducers/userLog';
 
@@ -11,14 +11,27 @@ const Navbar = () => {
 	const navigate = useNavigate();
 	const auth = useSelector(getUserLog)
 	const dispatch = useDispatch()
+	const {pathname} = useLocation()
+	const [navbarColor, setNavbarColor] = useState("")
 
 	const logOut = () => {
 		localStorage.removeItem('authToken')
 		dispatch(addUserLog(false));
 		navigate("/signIn")
 	}
+
+	useEffect(() => {
+		if (pathname === "/user/profile" || pathname === "/library") 
+		{
+			setNavbarColor("bg-black")
+		}
+		else {
+			setNavbarColor("bg-transparent")
+		}
+	}, [pathname])
+
 	return (
-    	<div className='w-full h-16  flex justify-between items-center p-2 xs:p-6 bg-transparent fixed z-10'>
+    	<div  className={`w-full h-16  flex justify-between items-center p-2 xs:p-6 ${navbarColor} fixed z-10`}>
 			<div className='space-x-1 flex items-center justify-center cursor-pointer' onClick={(() => auth === false ? navigate("/") : navigate("/library"))}>
 				<FontAwesomeIcon icon={faPlay} className="text-sm xs:text-2xl text-white p-2 bg-red-600 rounded-full"/>
 				<h1 className='text-white text-sm xs:text-lg'>Hypertube</h1>
