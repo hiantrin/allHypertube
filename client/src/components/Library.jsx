@@ -11,6 +11,7 @@ const Library = () => {
     const [gender, setGender] = useState("All")
     const [rating, setRating] = useState(0)
     const [allMovies, setAllMovies] = useState([])
+    const [error, setError] = useState({})
     const [sort, setSort] = useState({
         Title: false,
         Rating: false,
@@ -60,9 +61,26 @@ const Library = () => {
 	const [showGender, setShowGender] = useState(false)
 	const [showRating, setShowRating] = useState(false)
 
+    const validate = () => {
+        const err = {}
+        const regex = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/i
+        if (!regex.test(movie)) {
+            err.search = "Only numbers, characters and spaces are alowed"
+        }
+        if (Object.keys(err).length === 0) {
+            return false;
+        }
+        return (err);
+    }
+
     const searchMovie = (e) => {
         e.preventDefault()
-        console.log(movie)
+        const err = validate()
+        if (err)
+            setError(err)
+        else {
+            console.log("hna khesek tsifet request dyal search")
+        }
     }
 
     const clickSort = (element) => {
@@ -103,7 +121,7 @@ const Library = () => {
 		{allRating.map((element, id) => { 
 			return (
 				<div key={id} onClick={() => { setRating(element); setShowRating(!showRating)}}>
-					<h1 key={id} className="py-2 pl-2 pr-20 text-black cursor-pointer hover:bg-zinc-700 ">{element}+</h1>
+					<h1 key={id} className="py-2 pl-2 pr-10 xm:pr-20 text-black cursor-pointer hover:bg-zinc-700 text-xs xm:text-lg">{element}+</h1>
 					<div className='h-[1px] bg-black'/>
 				</div>
 			)
@@ -115,7 +133,7 @@ const Library = () => {
 		{allGender.map((element, id) => { 
 			return (
 				<div key={id} onClick={() => { setGender(element); setShowGender(!showGender)}}>
-					<h1 key={id} className="p-2 text-black cursor-pointer hover:bg-zinc-700 ">{element}</h1>
+					<h1 key={id} className="p-2 text-black cursor-pointer hover:bg-zinc-700 text-xs xm:text-lg">{element}</h1>
 					<div className='h-[1px] bg-black'/>
 				</div>
 			)
@@ -123,10 +141,10 @@ const Library = () => {
 	</div>
 
     const mapSort = 
-        <div className='flex space-x-2 mb-20'>
+        <div className=' space-y-4 xm:space-y-0 flex flex-col xm:flex-row xm:space-x-2 mb-20'>
             {sortInfos.map((element, id) => {
                 return(
-                    <div key={id} className='flex space-x-2 items-center justify-center'>
+                    <div key={id} className='flex space-x-2 xm:items-center xm:justify-center'>
                         <div className='w-4 h-4 border-2  border-red-600 rounded-full flex items-center justify-center cursor-pointer' onClick={() => clickSort(element)}>
                             <div className={sort[element] ? 'bg-red-600 w-2 h-2 rounded-full' : ""}/>
                         </div>
@@ -137,34 +155,35 @@ const Library = () => {
         </div>
 
   return (
-    <div className='h-screen w-full flex  justify-center px-48'>
+    <div className='h-screen w-full flex  justify-center px-[3%] xs:px-[10%] sm:px-[15%] lg:px-48'>
         <div className='mt-40 flex flex-col items-center w-full'>
-            <h1 className='text-white text-3xl mb-6'>HYPERTUBE</h1>
-            <h1 className='text-white text-sm mb-4'>Welcome to the official  Hypertube Website</h1>
-            <form className='bg-zinc-800  flex justify-center items-center px-2 mb-6' onSubmit={searchMovie}>
+            <h1 className='text-white text-xl xs:text-3xl mb-6'>HYPERTUBE</h1>
+            <h1 className='text-white text-xs xs:text-sm mb-4'>Welcome to the official  Hypertube Website</h1>
+            <form className='bg-zinc-800  flex justify-center items-center px-2 w-full lg:w-[600px]' onSubmit={searchMovie}>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='cursor-pointer ' onClick={searchMovie}/>
-                <input name="search" type="text" placeholder='Find the best movies' className='input-profile bg-transparent border-none hover:shadow-none w-[600px]' value={movie} onChange={(e) => setMovie(e.target.value)}/>
+                <input name="search" type="text" placeholder='Find the best movies' className='input-profile bg-transparent border-none hover:shadow-none w-full ' value={movie} onChange={(e) => setMovie(e.target.value)}/>
             </form>
-            <div className='w-full flex justify-between mb-16 '>
+            <h1 className='text-sm text-red-600 mb-8'>{error.search}</h1>
+            <div className='flex justify-between  w-full lg:w-[600px] mb-16'>
                 <div className='flex flex-col relative'>
-                    <h1 className='text-white text-sm'>Gender</h1>
-                    <div className='flex space-x-20 cursor-pointer' onClick={() => setShowGender(!showGender)}>
-                        <h1 className='text-red-600'>{gender}</h1>
-                        <FontAwesomeIcon icon={faSortDown} className="text-red-600"/>
+                    <h1 className='text-white text-xs xm:text-sm'>Gender</h1>
+                    <div className='flex space-x-8 sm:space-x-20 cursor-pointer' onClick={() => {setShowGender(!showGender) ; setShowRating(false)}}>
+                        <h1 className='text-red-600 text-xs xm:text-lg'>{gender}</h1>
+                        <FontAwesomeIcon icon={faSortDown} className="text-red-600 text-xs xm:text-lg"/>
                     </div>
 					{mapGender}
                 </div>
                 <div className='flex flex-col'>
-                    <h1 className='text-white text-sm'>Rating</h1>
-                    <div className='flex space-x-20 cursor-pointer' onClick={() => setShowRating(!showRating)}>
-                        <h1 className='text-red-600'>{rating === 0 ? 'All' : rating}</h1>
-                        <FontAwesomeIcon icon={faSortDown} className="text-red-600"/>
+                    <h1 className='text-white text-xs xm:text-sm'>Rating</h1>
+                    <div className='flex space-x-8 sm:space-x-20 cursor-pointer' onClick={() => {setShowRating(!showRating) ; setShowGender(false)}}>
+                        <h1 className='text-red-600 text-xs xm:text-lg'>{rating === 0 ? 'All' : rating}</h1>
+                        <FontAwesomeIcon icon={faSortDown} className="text-red-600 text-xs xm:text-lg"/>
                     </div>
 					{mapRating}
                 </div>
-                <button onClick={searchBy}>Search</button>
+                <button className='text-xs xm:text-lg' onClick={searchBy}>Search</button>
             </div>
-            <h1 className='text-white text-sm mb-3'>Sort by</h1>
+            <h1 className='text-white text-sm mb-6 xm:mb-3 '>Sort by</h1>
             {mapSort}
             <MoviesSearch movies={allMovies}/>
         </div>

@@ -21,7 +21,7 @@ const Navbar = () => {
 	}
 
 	useEffect(() => {
-		if (pathname === "/user/profile" || pathname === "/library") 
+		if (pathname === "/user/profile" || pathname === "/library" || pathname.slice(0, 6) === "/movie") 
 		{
 			setNavbarColor("bg-black")
 		}
@@ -34,16 +34,16 @@ const Navbar = () => {
     	<div  className={`w-full h-16  flex justify-between items-center p-2 xs:p-6 ${navbarColor} fixed z-10`}>
 			<div className='space-x-1 flex items-center justify-center cursor-pointer' onClick={(() => auth === false ? navigate("/") : navigate("/library"))}>
 				<FontAwesomeIcon icon={faPlay} className="text-sm xs:text-2xl text-white p-2 bg-red-600 rounded-full"/>
-				<h1 className='text-white text-sm xs:text-lg'>Hypertube</h1>
+				<h1 className='text-white text-sm xs:text-lg hidden xm:flex'>Hypertube</h1>
 			</div>
-			<div className='flex space-x-3'>
+			<div className='flex space-x-1 xm:space-x-3'>
 				<Flag country="US" />
 				{
 					auth === false ?
 					<button className='p-2 xs:px-4 xs:py-2 text-sm xs:text-lg' onClick={() => navigate('/signIn')}>Sign in</button> : 
 					<>
-						<button className='bg-transparent hover:bg-transparent hover:border hover:border-red-600' onClick={() => navigate("/user/profile")}>Profile</button>
-						<button onClick={logOut}>Log out</button>
+						<button className='text-xs xm:text-[16px] bg-transparent hover:bg-transparent hover:border hover:border-red-600' onClick={() => navigate("/user/profile")}>Profile</button>
+						<button className='text-xs xm:text-[16px]' onClick={logOut}>Log out</button>
 					</>
 					
 				}

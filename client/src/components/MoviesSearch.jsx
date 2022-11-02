@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 
+
 const MoviesSearch = ({ movies }) => {
 	const [showDetails, setShowDetails] = useState(0)
 	const navigate = useNavigate()

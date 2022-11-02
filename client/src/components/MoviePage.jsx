@@ -14,7 +14,7 @@ const MoviePage = () => {
 	const [cast, setCast] = useState([])
 
     const mapImg = 
-        <div className='w-auto flex flex-col space-y-4'>
+        <div className='w-auto flex flex-wrap justify-center gap-10 xl:gap-0 xl:flex-col xl:space-y-4 md:absolute xl:static top-[450px] xl:top-0 '>
 			{images.map((element, id) => {
 			return (
 					<img alt="background" key={id} src={element} className="border-4 rounded-lg"></img>
@@ -23,7 +23,7 @@ const MoviePage = () => {
 		</div>
 
 	const mapCast = 
-		<div className='flex flex-col space-y-8'>
+		<div className='flex gap-8 flex-wrap '>
 			{cast.map((element, id) => {
 				return (
 					<div key={id} className='flex items-center space-x-6'>
@@ -49,10 +49,14 @@ const MoviePage = () => {
 					res.data.data.movie.medium_screenshot_image3
 				]
 				setImages(imgs)
-				const actors = [
-					...res.data.data.movie.cast
-				]
-				setCast(actors)
+				if (res.data.data.movie?.cast)
+				{
+					const actors = [
+						...res.data.data.movie.cast
+					]
+					setCast(actors)
+				}
+				
             }
             else {
                 swal({
@@ -67,12 +71,13 @@ const MoviePage = () => {
         movieDetails()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
   return (
-    <div className='h-screen w-full flex  justify-center px-[10%]'>
+    <div className='h-auto w-full flex  justify-center px-[10%]'>
         <div className='mt-40 flex flex-col items-center w-full '>
-            <div className='flex items-center justify-between w-full'>
+            <div className='flex flex-col md:flex-row items-center  xl:justify-between w-full relative space-y-20 md:space-y-0'>
                 <img alt="cover" className=' border-[2.5px] rounded-lg' src={movie.medium_cover_image}/>
-                <div className='flex flex-col items-center justify-center space-y-9'>
+                <div className='flex flex-col items-center justify-center space-y-9 md:ml-20 lg:ml-56 xl:ml-0'>
                     <h1 className='text-white text-3xl font-bold '>{movie.title}</h1>
                     <h1 className='text-white text-xl'>{movie.year}</h1>
                     { movie?.genres ?
@@ -84,37 +89,40 @@ const MoviePage = () => {
                             })}
                         </div> : ""
                     }
-					<div className='flex space-x-32  items-center w-full'>
+					<div className='flex space-x-5 xm:space-x-16 lg:space-x-32  items-center w-full'>
 						<h1 className='text-zinc-300 text-sm '>Quality :</h1>
 						<h1 className='text-sm border border-zinc-500 p-1 text-zinc-300'>720HD</h1>
 						<h1 className='text-sm border border-zinc-500 p-1 text-zinc-300'>1080HD</h1> 
 					</div>
 					<div className='flex items-center w-full'>
-						<h1 className='text-zinc-300 text-sm mr-32'>Rating :</h1>
+						<h1 className='text-zinc-300 text-sm mr-6 xm:mr-[70px] lg:mr-[134px]'>Rating :</h1>
 						<h1 className='text-zinc-300 text-md mr-3'>{movie.rating}</h1>
 						<FontAwesomeIcon icon={faStar} className="text-red-600"/>
 
 					</div>
 					<div className='flex items-center w-full'>
-						<h1 className='text-zinc-300 text-sm mr-32'>Time :</h1>
+						<h1 className='text-zinc-300 text-sm mr-8 xm:mr-[80px] lg:mr-[140px]'>Time :</h1>
 						<h1 className='text-zinc-300 text-md '>{movie.runtime}  min</h1>
 					</div>
                 </div>
 				{mapImg}
             </div>
-			<button className='mt-10'>Watch now</button>
-			<div className='flex justify-between items-center  mt-20'>
-				<div className='flex flex-col items-center text-center space-y-10 w-[60%]'>
-					<h1 className='text-white text-2xl'>Description</h1>
-					<h1 className='text-white text-sm'>{movie.description_full}</h1>
-				</div>
-				<div className='flex flex-col space-y-10 w-[30%]'>
+			<button className='mt-24 md:mt-[700px] xl:mt-24'>Watch now</button>
+			<div className='flex flex-col justify-center items-center  mt-20 w-full space-y-20'>
+				<div className='flex flex-col space-y-10 justify-center items-center'>
 					<h1 className='text-white text-2xl text-center'>Cast</h1>
 					{mapCast}
 				</div>
+				<div className='flex flex-col items-center text-center space-y-10 max-w-[600px]'>
+					<h1 className='text-white text-2xl font-bold'>Description</h1>
+					<h1 className='text-gray-300 text-lg'>{movie.description_full}</h1>
+				</div>
 			</div>
-			<div className='mt-10 flex items-center justify-center'>
+			<div className='mt-20 flex items-center justify-center'>
 					<h1 className='text-white text-lg'>Thank you for watching</h1>
+			</div>
+			<div className='mt-20'>
+
 			</div>
         </div>
     </div>
