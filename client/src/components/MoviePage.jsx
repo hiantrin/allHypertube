@@ -5,6 +5,9 @@ import swal from 'sweetalert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import Oops from '../images/notFound.jpeg'
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+
 
 const MoviePage = () => {
     const [movie, setMovie] = useState({})
@@ -12,8 +15,9 @@ const MoviePage = () => {
     const { slug } = useParams()
 	const [images, setImages] = useState([])
 	const [cast, setCast] = useState([])
+	const [showImage, setShowImage] = useState(true)
 
-    const mapImg = 
+    const mapImg =
         <div className='w-auto flex flex-wrap justify-center gap-10 xl:gap-0 xl:flex-col xl:space-y-4 md:absolute xl:static top-[450px] xl:top-0 '>
 			{images.map((element, id) => {
 			return (
@@ -22,8 +26,14 @@ const MoviePage = () => {
 			})}
 		</div>
 
-	const mapCast = 
+	const mapCast =
 		<div className='flex gap-8 flex-wrap '>
+			{cast.length === 0 ? 
+				<div className='flex space-x-5 items-center '> 
+					<FontAwesomeIcon icon={faCircleExclamation} className="text-yellow-500 text-2xl"/>
+					<h1 className='text-white text-lg'>Actors Details not available</h1>
+				</div> : "" 
+			}
 			{cast.map((element, id) => {
 				return (
 					<div key={id} className='flex items-center space-x-6'>
@@ -71,12 +81,14 @@ const MoviePage = () => {
         movieDetails()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
   return (
     <div className='h-auto w-full flex  justify-center px-[10%]'>
         <div className='mt-40 flex flex-col items-center w-full '>
             <div className='flex flex-col md:flex-row items-center  xl:justify-between w-full relative space-y-20 md:space-y-0'>
-                <img alt="cover" className=' border-[2.5px] rounded-lg' src={movie.medium_cover_image}/>
+                <img alt="cover" className={showImage ? ' border-[2.5px] rounded-lg' : "hidden"} src={movie.medium_cover_image} onError={() => setShowImage(false) }/>
+				<div className={showImage ? "hidden" : 'flex justify-center items-center w-56 '} >
+					<img alt="OOOps" src={Oops} className="w-full h-full"></img>
+				</div>
                 <div className='flex flex-col items-center justify-center space-y-9 md:ml-20 lg:ml-56 xl:ml-0'>
                     <h1 className='text-white text-3xl font-bold '>{movie.title}</h1>
                     <h1 className='text-white text-xl'>{movie.year}</h1>

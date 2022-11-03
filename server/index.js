@@ -19,6 +19,7 @@ const forgetPassword = require('./routes/forgetPassword')
 const resetPassword = require('./routes/resetPassword')
 const getInfos = require('./routes/getInfos')
 const changeInfos = require('./routes/changeInfos')
+const getMovies = require('./routes/getMovies')
 
 
 app.use('/', signInRouter)
@@ -28,6 +29,7 @@ app.use('/auth', forgetPassword)
 app.use('/auth', resetPassword)
 app.use('/user', getInfos)
 app.use('/user', changeInfos)
+app.use('/movies', getMovies)
 
 
 app.listen(3001, () => {

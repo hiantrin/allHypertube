@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { faSortDown } from '@fortawesome/free-solid-svg-icons'
 import axios from "axios";
 import MoviesSearch from './MoviesSearch'
+import instance from '../components/instances/instance'
 
 const Library = () => {
     const [movie, setMovie] = useState("")
@@ -73,13 +74,19 @@ const Library = () => {
         return (err);
     }
 
+    const getIt = async (string) => {
+        const res = await instance.get(`/movies/getMovies?string=${string}`)
+        console.log(res)
+    } 
+
     const searchMovie = (e) => {
         e.preventDefault()
         const err = validate()
         if (err)
             setError(err)
         else {
-            console.log("hna khesek tsifet request dyal search")
+            const string = `query_term=${movie}`
+            getIt(string)
         }
     }
 
@@ -98,9 +105,8 @@ const Library = () => {
     const getMovies = async (string) => {
         const res = await axios.get(`https://yts.mx/api/v2/list_movies.json?${string}`)
         if (res.data.status === 'ok')
-        {
             setAllMovies(res.data.data.movies)
-        } else if (res.data.status === 'error') {
+        else if (res.data.status === 'error') {
 
         }
     }
