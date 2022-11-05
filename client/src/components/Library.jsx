@@ -65,6 +65,11 @@ const Library = () => {
     const validate = () => {
         const err = {}
         const regex = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/i
+        if (movie.trim().length === 0) {
+            console.log("first")
+            err.search = "the Search must not contains only spaces"
+            return err;
+        }
         if (!regex.test(movie)) {
             err.search = "Only numbers, characters and spaces are alowed"
         }
@@ -76,7 +81,17 @@ const Library = () => {
 
     const getIt = async (string) => {
         const res = await instance.get(`/movies/getMovies?string=${string}`)
-        console.log(res)
+        if(res.data.status === 1)
+        {
+            if(res.data.data.movie_count === 0)
+                setAllMovies([])
+            else 
+                setAllMovies(res.data.data.movies)
+
+        } else {
+
+        }
+
     } 
 
     const searchMovie = (e) => {
@@ -85,6 +100,7 @@ const Library = () => {
         if (err)
             setError(err)
         else {
+            setError({})
             const string = `query_term=${movie}`
             getIt(string)
         }
@@ -100,6 +116,7 @@ const Library = () => {
         }
         myWe[element] = !sort[element]
         setSort(myWe)
+        
     }
 
     const getMovies = async (string) => {
@@ -113,6 +130,7 @@ const Library = () => {
 
     const searchBy = () => {
         const sortBy = Object.keys(sort).filter((item) => sort[item] === true)
+        if (sortBy.length !== 0)
         sortBy[0] = sortBy[0].toLowerCase()
         const string = `limit=50&sort_by=${sortBy[0]}&genre=${gender === 'All' ? "" : gender}&minimum_rating=${rating}`
         getMovies(string)
