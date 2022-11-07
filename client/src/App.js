@@ -19,6 +19,8 @@ import { addUserData} from "./components/redux/reducers/userSlice";
 import { addUserLog } from "./components/redux/reducers/userLog";
 import Library from "./components/Library";
 import MoviePage from "./components/MoviePage";
+import Loading from "./components/Loading";
+import Error404 from "./components/Error404";
 
 function App() {
 	const location = useLocation();
@@ -27,6 +29,7 @@ function App() {
     const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const slug = localStorage.getItem('resetToken')
+	const [isLoading, setIsLoading] = useState(false);
 
 
 	useEffect(() => {
@@ -59,6 +62,10 @@ function App() {
 	}, [location])
 
 	useEffect(() => {
+		setIsLoading(true);
+		setTimeout(() => {
+			setIsLoading(false)
+		}, 1000)
 		if (location.pathname === "/")
 		{
 			document.body.removeAttribute('class');
@@ -77,8 +84,10 @@ function App() {
 	}, [location])
 
 	return (
-		<div className="flex flex-col">
-			<Navbar />
+		<>
+			<Loading isLoading={isLoading}/>
+			<div className={!isLoading ? "flex flex-col" : "hidden"}>
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<PublicRoutes auth={auth} />}>
 						<Route path='/' element={<Home />}/>
@@ -93,8 +102,12 @@ function App() {
 						<Route path='/library' element={<Library />} />
 						<Route path='/movie/:slug' element={<MoviePage />} />
 					</Route>
+					<Route path="*" element={<Error404 />}/>
 				</Routes>
-		</div>
+			</div>
+			
+		</>
+		
 	);
 }
 

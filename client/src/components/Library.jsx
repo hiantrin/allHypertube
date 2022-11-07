@@ -6,13 +6,18 @@ import { faSortDown } from '@fortawesome/free-solid-svg-icons'
 import axios from "axios";
 import MoviesSearch from './MoviesSearch'
 import instance from '../components/instances/instance'
+import Lottie from "lottie-react";
+import movieLoading from "../images/movieLoading.json"
 
 const Library = () => {
+    const authToken = localStorage.getItem('authToken')
     const [movie, setMovie] = useState("")
     const [gender, setGender] = useState("All")
     const [rating, setRating] = useState(0)
     const [allMovies, setAllMovies] = useState([])
     const [error, setError] = useState({})
+    const [isLoading, setIsLoading] = useState(true);
+    const [page, setPage] = useState(1);
     const [sort, setSort] = useState({
         Title: false,
         Rating: false,
@@ -66,7 +71,6 @@ const Library = () => {
         const err = {}
         const regex = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/i
         if (movie.trim().length === 0) {
-            console.log("first")
             err.search = "the Search must not contains only spaces"
             return err;
         }
@@ -80,14 +84,24 @@ const Library = () => {
     }
 
     const getIt = async (string) => {
-        const res = await instance.get(`/movies/getMovies?string=${string}`)
+        const res = await instance.post(`/movies/getMovies`, {
+            string: string,
+            token: authToken,
+            type : 0,
+        })
         if(res.data.status === 1)
         {
-            if(res.data.data.movie_count === 0)
-                setAllMovies([])
-            else 
-                setAllMovies(res.data.data.movies)
-
+            if (res.data.data.movies)
+            {
+                if(res.data.data.movie_count === 0)
+                    setAllMovies([])
+                else if (res.data.data.movie_count !== 0 && page === 1)
+                    setAllMovies(res.data.data.movies)
+                else if (res.data.data.movie_count !== 0 && page !== 1)
+                    setAllMovies([...allMovies, ...res.data.data.movies])
+            }
+            else
+                setIsLoading(false)
         } else {
 
         }
@@ -96,12 +110,13 @@ const Library = () => {
 
     const searchMovie = (e) => {
         e.preventDefault()
+        setPage(1);
         const err = validate()
         if (err)
             setError(err)
         else {
             setError({})
-            const string = `query_term=${movie}`
+            const string = `limit=50&page=${page}&query_term=${movie}`
             getIt(string)
         }
     }
@@ -119,27 +134,58 @@ const Library = () => {
         
     }
 
-    const getMovies = async (string) => {
+    const getMovies = async (string, count) => {
         const res = await axios.get(`https://yts.mx/api/v2/list_movies.json?${string}`)
         if (res.data.status === 'ok')
-            setAllMovies(res.data.data.movies)
+        {
+            if (res.data.data?.movies)
+            {
+                if (count === 1)
+                    setAllMovies(res.data.data.movies)
+                else
+                    setAllMovies([...allMovies, ...res.data.data.movies])
+            }
+            else
+                setIsLoading(false);
+        }
         else if (res.data.status === 'error') {
 
         }
     }
 
-    const searchBy = () => {
+    const searchBy = (count) => {
+        if (movie !== "")
+        {
+            setIsLoading(true);
+            setMovie("");
+            setPage(1);
+        }
+        if (count === 1)
+            setPage(1)
         const sortBy = Object.keys(sort).filter((item) => sort[item] === true)
         if (sortBy.length !== 0)
-        sortBy[0] = sortBy[0].toLowerCase()
-        const string = `limit=50&sort_by=${sortBy[0]}&genre=${gender === 'All' ? "" : gender}&minimum_rating=${rating}`
-        getMovies(string)
+            sortBy[0] = sortBy[0].toLowerCase()
+        else
+            sortBy[0] = "date_added"
+        const string = `limit=50&page=${page}&sort_by=${sortBy[0]}&genre=${gender === 'All' ? "" : gender}&minimum_rating=${rating}`
+        getMovies(string, page)
     }
 
     useEffect(() => {
-        const string = 'limit=50'
-        getMovies(string)
-    }, [])
+        if (isLoading === true && movie === "")
+            searchBy(page)
+        if (movie !== "")
+            getIt(`limit=50&page=${page}&query_term=${movie}`)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page])
+
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight)
+                setPage(page + 1);
+        })
+    })
+
 	const mapRating = 
 	<div className={showRating ? 'flex flex-col bg-zinc-500 absolute mt-14 z-30' : "hidden"}>
 		{allRating.map((element, id) => { 
@@ -180,7 +226,7 @@ const Library = () => {
 
   return (
     <div className='h-screen w-full flex  justify-center px-[3%] xs:px-[10%] sm:px-[15%] lg:px-48'>
-        <div className='mt-40 flex flex-col items-center w-full'>
+        <div className='mt-40 flex flex-col items-center w-full '>
             <h1 className='text-white text-xl xs:text-3xl mb-6'>HYPERTUBE</h1>
             <h1 className='text-white text-xs xs:text-sm mb-4'>Welcome to the official  Hypertube Website</h1>
             <form className='bg-zinc-800  flex justify-center items-center px-2 w-full lg:w-[600px]' onSubmit={searchMovie}>
@@ -205,11 +251,12 @@ const Library = () => {
                     </div>
 					{mapRating}
                 </div>
-                <button className='text-xs xm:text-lg' onClick={searchBy}>Search</button>
+                <button className='text-xs xm:text-lg' onClick={() => searchBy(1)}>Search</button>
             </div>
             <h1 className='text-white text-sm mb-6 xm:mb-3 '>Sort by</h1>
             {mapSort}
             <MoviesSearch movies={allMovies}/>
+            <Lottie animationData={movieLoading} loop={true} autoPlay={true}  className={!isLoading ? "hidden " : "flex"}/>
         </div>
     </div>
   )
