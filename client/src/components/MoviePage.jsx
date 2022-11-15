@@ -7,6 +7,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import Oops from '../images/notFound.jpeg'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { useTranslation } from 'react-i18next'
 
 
 const MoviePage = () => {
@@ -16,6 +17,7 @@ const MoviePage = () => {
 	const [images, setImages] = useState([])
 	const [cast, setCast] = useState([])
 	const [showImage, setShowImage] = useState(true)
+	const { t } = useTranslation();
 
     const mapImg =
         <div className='w-auto flex flex-wrap justify-center gap-10 xl:gap-0 xl:flex-col xl:space-y-4 md:absolute xl:static top-[450px] xl:top-0 '>
@@ -31,7 +33,7 @@ const MoviePage = () => {
 			{cast.length === 0 ? 
 				<div className='flex space-x-5 items-center '> 
 					<FontAwesomeIcon icon={faCircleExclamation} className="text-yellow-500 text-2xl"/>
-					<h1 className='text-white text-lg'>Actors Details not available</h1>
+					<h1 className='text-white text-lg'>{t('Actors Details not available')}</h1>
 				</div> : "" 
 			}
 			{cast.map((element, id) => {
@@ -96,33 +98,33 @@ const MoviePage = () => {
                     	<div className='flex space-x-8'>
                         	{movie.genres.map((element, id) => {
                             	return (
-                                    <h1 key={id} className="text-white text-xl">{element}</h1>
+                                    <h1 key={id} className="text-white text-xl">{t(element)}</h1>
                                 )
                             })}
                         </div> : ""
                     }
 					<div className='flex space-x-5 xm:space-x-16 lg:space-x-32  items-center w-full'>
-						<h1 className='text-zinc-300 text-sm '>Quality :</h1>
+						<h1 className='text-zinc-300 text-sm '>{t('Quality')}</h1>
 						<h1 className='text-sm border border-zinc-500 p-1 text-zinc-300'>720HD</h1>
 						<h1 className='text-sm border border-zinc-500 p-1 text-zinc-300'>1080HD</h1> 
 					</div>
 					<div className='flex items-center w-full'>
-						<h1 className='text-zinc-300 text-sm mr-6 xm:mr-[70px] lg:mr-[134px]'>Rating :</h1>
+						<h1 className='text-zinc-300 text-sm mr-6 xm:mr-[70px] lg:mr-[134px]'>{t('Rating')} :</h1>
 						<h1 className='text-zinc-300 text-md mr-3'>{movie.rating}</h1>
 						<FontAwesomeIcon icon={faStar} className="text-red-600"/>
 
 					</div>
 					<div className='flex items-center w-full'>
-						<h1 className='text-zinc-300 text-sm mr-8 xm:mr-[80px] lg:mr-[140px]'>Time :</h1>
+						<h1 className='text-zinc-300 text-sm mr-8 xm:mr-[80px] lg:mr-[140px]'>{t('Time :')}</h1>
 						<h1 className='text-zinc-300 text-md '>{movie.runtime}  min</h1>
 					</div>
                 </div>
 				{mapImg}
             </div>
-			<button className='mt-24 md:mt-[700px] xl:mt-24'>Watch now</button>
+			<button className='mt-24 md:mt-[700px] xl:mt-24'>{t('Watch Now !')}</button>
 			<div className='flex flex-col justify-center items-center  mt-20 w-full space-y-20'>
 				<div className='flex flex-col space-y-10 justify-center items-center'>
-					<h1 className='text-white text-2xl text-center'>Cast</h1>
+					<h1 className='text-white text-2xl text-center'>{t('Cast')}</h1>
 					{mapCast}
 				</div>
 				<div className='flex flex-col items-center text-center space-y-10 max-w-[600px]'>
@@ -131,7 +133,7 @@ const MoviePage = () => {
 				</div>
 			</div>
 			<div className='mt-20 flex items-center justify-center'>
-					<h1 className='text-white text-lg'>Thank you for watching</h1>
+					<h1 className='text-white text-lg'>{t('Thank you for watching')}</h1>
 			</div>
 			<div className='mt-20'>
 

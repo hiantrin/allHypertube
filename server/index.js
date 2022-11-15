@@ -20,6 +20,8 @@ const resetPassword = require('./routes/resetPassword')
 const getInfos = require('./routes/getInfos')
 const changeInfos = require('./routes/changeInfos')
 const getMovies = require('./routes/getMovies')
+const oauth = require('./routes/oauth')
+
 
 
 app.use('/', signInRouter)
@@ -27,6 +29,7 @@ app.use('/', signUpRouter)
 app.use('/auth', confirmEmail)
 app.use('/auth', forgetPassword)
 app.use('/auth', resetPassword)
+app.use('/auth', oauth)
 app.use('/user', getInfos)
 app.use('/user', changeInfos)
 app.use('/movies', getMovies)

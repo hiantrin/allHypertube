@@ -5,13 +5,15 @@ import IntraImg from "../images/42.png"
 import { useNavigate } from 'react-router-dom'
 import instance from './instances/instance'
 import swal from 'sweetalert'
+import { useTranslation } from 'react-i18next'
 
 const SignUp = () => {
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const butts = [
-		{icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5"},
-		{icon: GithubImg, path: "", color:"bg-white", size: "w-7 h-7"},
-		{icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8"}
+		{icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5", link: "/auth/google"},
+		{icon: GithubImg, path: "", color:"bg-white", size: "w-7 h-7", link: "/"},
+		{icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8", link: "/"}
 	  ]
 	  const initialValue = {
 		firstName: "",
@@ -108,35 +110,35 @@ const SignUp = () => {
 		<div className='flex  space-x-2 mb-5 w-60 xs:w-96'>
 			{butts.map((item, id) => {
 				return(
-					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} `}><img alt="google" src={item.icon} className={`${item.size}`}></img> </button>
+					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} `}><img alt="google" src={item.icon} className={`${item.size}`} onClick={() => window.open("http://localhost:3001/auth/google")}></img> </button>
 			)})}
 		</div>
 	return (
 		<div className='h-screen w-full flex items-center justify-center sm:justify-end sm:pr-[20%] mt-10 xs:mt-0'>
 			<div className='flex flex-col'>
 				<div className='flex justify-end mb-8'>
-					<h1 className='text-3xl xs:text-5xl font-bold text-white'>Sign Up</h1>
+					<h1 className='text-3xl xs:text-5xl font-bold text-white'>{t('Sign up')}</h1>
 				</div>
 				{map}
 				<div className='flex w-auto  items-center justify-between mb-5'>
 					<div className='w-[44%] h-[2px] bg-white rounded-full'></div>
-					<h1 className='text-white text-lg'>Or</h1>
+					<h1 className='text-white text-lg'>{t('Or')}</h1>
 					<div className='w-[44%] h-[2px] bg-white rounded-full'></div>
 				</div>
 				<form className='w-auto space-y-2 mb-8' onSubmit={prevent}>
 					<div className='w-full flex flex-col xs:flex-row xs:justify-between space-y-2 xs:space-y-0'>
 						<div className='xs:w-[48%]'>
-							<input type="text" name="First Name" placeholder='First Name' className='input-gray ' value={infos.firstName} onChange={(e) => setInfos({...infos, firstName : e.target.value})}/>
+							<input type="text" name="First Name" placeholder={t('First name')} className='input-gray ' value={infos.firstName} onChange={(e) => setInfos({...infos, firstName : e.target.value})}/>
 							<h1 className='flex text-xs text-red-600'>{error.firstName}</h1>
 						</div>
 						<div className='xs:w-[48%]'>
-							<input type="text" name="Last Name" placeholder='Last Name' className='input-gray ' value={infos.lastName} onChange={(e) => setInfos({...infos, lastName : e.target.value})}/>
+							<input type="text" name="Last Name" placeholder={t('Last name')} className='input-gray ' value={infos.lastName} onChange={(e) => setInfos({...infos, lastName : e.target.value})}/>
 							<h1 className='flex text-xs text-red-600'>{error.lastName}</h1>
 						</div>
 					</div>
 					<div className='w-full flex flex-col xs:flex-row xs:justify-between space-y-2 xs:space-y-0'>
 						<div className='xs:w-[48%]'>
-							<input type="text" name="Username" placeholder='Username' className='input-gray ' value={infos.username} onChange={(e) => setInfos({...infos, username : e.target.value})}/>
+							<input type="text" name="Username" placeholder={t('Username')} className='input-gray ' value={infos.username} onChange={(e) => setInfos({...infos, username : e.target.value})}/>
 							<h1 className='flex text-xs text-red-600'>{error.username}</h1>
 						</div>
 						<div className='xs:w-[48%]'>
@@ -144,15 +146,15 @@ const SignUp = () => {
 							<h1 className='flex text-xs text-red-600'>{error.email}</h1>
 						</div>
 					</div>
-					<input type="password" name="Password" placeholder='Password' className='input-gray' value={infos.password} onChange={(e) => setInfos({...infos, password : e.target.value})}/>
+					<input type="password" name="Password" placeholder={t('Password')} className='input-gray' value={infos.password} onChange={(e) => setInfos({...infos, password : e.target.value})}/>
 					<h1 className='flex text-xs text-red-600'>{error.password}</h1>
-					<input type="password" name="Verify Password" placeholder='Verify Password' className='input-gray ' value={infos.verifyPassword} onChange={(e) => setInfos({...infos, verifyPassword : e.target.value})}/>
+					<input type="password" name="Verify Password" placeholder={t('Verify Password')} className='input-gray ' value={infos.verifyPassword} onChange={(e) => setInfos({...infos, verifyPassword : e.target.value})}/>
 					<h1 className='flex text-xs text-red-600'>{error.verifyPassword}</h1>
-					<button className='w-full h-10 rounded-sm' onClick={prevent}>Sign Up</button>
+					<button className='w-full h-10 rounded-sm' onClick={prevent}>{t('Sign up')}</button>
 				</form>
 				<div className='flex space-x-2'>
-					<h1 className='text-gray-500 text-sm'>Already a member ? </h1> 
-					<h1 className='text-gray-300 text-sm cursor-pointer italic translate-h' onClick={() => navigate("/signIn")}> Sign In Now.</h1>
+					<h1 className='text-gray-500 text-sm'>{t('Already a member?')} </h1> 
+					<h1 className='text-gray-300 text-sm cursor-pointer italic translate-h' onClick={() => navigate("/signIn")}> {t('login')} {t('Now')}.</h1>
 				</div>
 			</div>
 		</div>

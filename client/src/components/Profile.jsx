@@ -13,12 +13,14 @@ import swal from 'sweetalert'
 import { useEffect } from 'react'
 import instance from './instances/instance'
 import ModalImage from './modal/ModalImage'
+import { useTranslation } from 'react-i18next'
 
 
 const Profile = () => {
     const dispatch = useDispatch()
     const authToken = localStorage.getItem('authToken')
     const data = useSelector(getUserData)
+    const { t } = useTranslation();
     const imgs = [
         img,
         img,
@@ -291,20 +293,20 @@ const Profile = () => {
                             <h1 className='flex text-xs text-red-600 mb-2'>{errors.lastName}</h1>
                             <input name="email" type="text" placeholder='Please Enter Your email' className='input-profile' value={userInfo.email} onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}></input>
                             <h1 className='flex text-xs text-red-600 mb-2'>{errors.email}</h1>
-                            <button className='rounded-sm' onClick={changeInfos}>Change Infos</button>
+                            <button className='rounded-sm' onClick={changeInfos}>{t('Edit change')}</button>
                         </form> :
                         <form className='flex flex-col' onSubmit={changePassword}>
                             <input name="Password" type="text" placeholder='Please Enter Your New email' className='input-profile' value={pass.password} onChange={(e) => setPass({...pass, password: e.target.value})}></input>
                             <h1 className='flex text-xs text-red-600 mb-2'>{errors.password}</h1>
                             <input name="confPassword" type="text" placeholder='Please Confirm Your New email' className='input-profile' value={pass.confPassword} onChange={(e) => setPass({...pass, confPassword: e.target.value})}></input>
                             <h1 className='flex text-xs text-red-600 mb-2'>{errors.confPassword}</h1>
-                            <button className='rounded-sm' onClick={changePassword}>Change Password</button>
+                            <button className='rounded-sm' onClick={changePassword}>{t('Change Password')}</button>
                         </form>
                     }   
 
                 </div>
             </div>
-            {/* {mapImg} */}
+            {mapImg}
         </div>
     </div>
   )

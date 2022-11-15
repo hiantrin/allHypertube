@@ -31,9 +31,9 @@ function App() {
 	const slug = localStorage.getItem('resetToken')
 	const [isLoading, setIsLoading] = useState(false);
 
-
 	useEffect(() => {
 		const check = async () => {
+
 			const res = await checkAuth()
 			if (res === true)
 			{

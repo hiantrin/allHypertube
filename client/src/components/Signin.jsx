@@ -5,9 +5,11 @@ import IntraImg from "../images/42.png"
 import { useNavigate } from 'react-router-dom'
 import instance from './instances/instance'
 import swal from 'sweetalert'
+import { useTranslation } from 'react-i18next'
 
 
 const Signin = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
   	const butts = [
 		{title: "Google", icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5"},
@@ -91,7 +93,7 @@ const Signin = () => {
 		<div className='flex flex-col space-y-2 mb-5 w-full xs:w-96'>
 			{butts.map((item, id) => {
 				return(
-					<button key={id} className={`w-full h-10 + ${item.color} `}>Sign in with {item.title} <img alt="google" src={item.icon} className={`ml-3 + ${item.size}`}></img> </button>
+					<button key={id} className={`w-full h-10 + ${item.color} `}>{t('passport')} {item.title} <img alt="google" src={item.icon} className={`ml-3 + ${item.size}`}></img> </button>
 			)})}
 		</div>
 
@@ -99,27 +101,27 @@ const Signin = () => {
 		<div className='h-screen w-full flex items-center justify-center sm:justify-end sm:pr-[20%]'>
 			<div className='flex flex-col w-[250px] xs:w-auto'>
 				<div className='flex justify-end mb-8'>
-					<h1 className='text-5xl font-bold text-white'>Sign in</h1>
+					<h1 className='text-5xl font-bold text-white'>{t('login')}</h1>
 				</div>
 				{map}
 				<div className='flex w-auto  items-center justify-between mb-5'>
 					<div className='w-[44%] h-[2px] bg-white rounded-full'></div>
-					<h1 className='text-white text-lg'>Or</h1>
+					<h1 className='text-white text-lg'>{t('Or')}</h1>
 					<div className='w-[44%] h-[2px] bg-white rounded-full'></div>
 				</div>
 				<form className='w-auto  mb-1' onSubmit={prevent}>
 					<input name="email" placeholder='Email' className='input-gray' value={infos.email} onChange={(e) => setInfos({...infos, email: e.target.value})}></input>
 					<h1 className='flex text-xs text-red-600 mb-2'>{errors.email}</h1>
-					<input name="password" placeholder='Password' className='input-gray' value={infos.password} onChange={(e) => setInfos({...infos, password: e.target.value})}></input>
+					<input name="password" placeholder={t('Password')} className='input-gray' value={infos.password} onChange={(e) => setInfos({...infos, password: e.target.value})}></input>
 					<h1 className='flex text-xs text-red-600 mb-2'>{errors.password}</h1>
-					<button className='w-full h-10 rounded-sm' onClick={submitInfos}>Sign in</button>
+					<button className='w-full h-10 rounded-sm' onClick={submitInfos}>{t('login')}</button>
 				</form>
 				<div className='w-auto flex justify-end mb-5'>
-					<h1 className='text-gray-400 text-sm italic cursor-pointer translate-h' onClick={() => navigate("/auth/forgetPassword")}>Forget password ?</h1>
+					<h1 className='text-gray-400 text-sm italic cursor-pointer translate-h' onClick={() => navigate("/auth/forgetPassword")}>{t('forgetPassword')}</h1>
 				</div>
 				<div className='flex space-x-2'>
-					<h1 className='text-gray-500 text-sm'>New to Hypertube ? </h1> 
-					<h1 className='text-gray-300 text-sm cursor-pointer italic translate-h' onClick={() => navigate("/signUp")}> Sign Up Now.</h1>
+					<h1 className='text-gray-500 text-sm'>{t('New')} Hypertube ? </h1> 
+					<h1 className='text-gray-300 text-sm cursor-pointer italic translate-h' onClick={() => navigate("/signUp")}> {t('Sign up')} {t('Now')}.</h1>
 				</div>
 			</div>
 		</div>
