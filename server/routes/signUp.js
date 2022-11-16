@@ -7,22 +7,7 @@ const createToken = require('../components/createJwt')
 const checkEmail = require('../components/checkEmail')
 const createTransporter = require('../components/createTransporter')
 const bcrypt = require('bcrypt');
-
-const checkUsername =  (username) => {
-    return new Promise((resolve, reject) => {
-        pool.getConnection((err,connection) => {
-            if (err) reject(err)
-            connection.execute('SELECT * FROM `users` WHERE `username` = ? ', [username], (err, result) => {
-                if(err) reject(err)
-                else {
-                    connection.release();
-                    if (result.length === 0) resolve(true)
-                    else resolve(false)
-                }
-            })
-        })
-    })
-}
+const checkUsername = require('../components/checkUsername')
 
 const check = async (req, res, next) => {
     const error = {}
@@ -119,7 +104,7 @@ router.post('/signUp', check, async (req, res) => {
         }
         else res.send(response(0, null, null))
     }
-    else 
+    else
         res.send(response(0, req.bridgeErrors, null))
 })
 

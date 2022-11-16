@@ -110,7 +110,7 @@ const SignUp = () => {
 		<div className='flex  space-x-2 mb-5 w-60 xs:w-96'>
 			{butts.map((item, id) => {
 				return(
-					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} `}><img alt="google" src={item.icon} className={`${item.size}`} onClick={() => window.open("http://localhost:3001/auth/google")}></img> </button>
+					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} ` } onClick={() => window.open("http://localhost:3001/auth/google")}><img alt="google" src={item.icon} className={`${item.size}`}></img> </button>
 			)})}
 		</div>
 	return (

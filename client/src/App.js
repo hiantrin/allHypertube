@@ -21,6 +21,7 @@ import Library from "./components/Library";
 import MoviePage from "./components/MoviePage";
 import Loading from "./components/Loading";
 import Error404 from "./components/Error404";
+import AuthError from "./components/AuthError";
 
 function App() {
 	const location = useLocation();
@@ -96,6 +97,7 @@ function App() {
 						<Route path='/auth/forgetPassword' element={<ForgetPassword />} />
 						<Route path='/confirm/:slug' element={<Confirm />} />
 						<Route path='/auth/resetPassword/:slug' element={<ResetPassword />} />
+						<Route path='/authError/:slug' element={<AuthError />} />
 					</Route>
 					<Route path="/" element={<PrivateRoutes auth={auth} />}>
 						<Route path='/user/profile' element={<Profile />} />
