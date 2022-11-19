@@ -26,7 +26,6 @@ import AuthError from "./components/AuthError";
 function App() {
 	const location = useLocation();
 	const [auth, setAuth] = useState(null);
-	const token = localStorage.getItem('authToken')
     const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const slug = localStorage.getItem('resetToken')
@@ -38,14 +37,15 @@ function App() {
 			const res = await checkAuth()
 			if (res === true)
 			{
+				const tokenInst = localStorage.getItem('authToken');
 				const res = await instance.post('/user/getInfos', {
-					token: token,
+					token: tokenInst,
 					type: 0
 				})
 				if (res.data.status === 0) {
 					swal({
 						title: "Oooooooops",
-						text: "Something gone Wrong Please Log In Again",
+						text: "Something gone Wrong Please Try Again",
 						icon: "Error",
 						buttons: "close"
 					})
@@ -66,7 +66,7 @@ function App() {
 		setIsLoading(true);
 		setTimeout(() => {
 			setIsLoading(false)
-		}, 1000)
+		}, 1500)
 		if (location.pathname === "/")
 		{
 			document.body.removeAttribute('class');

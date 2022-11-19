@@ -31,7 +31,7 @@ const insertUser = (infos) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) reject(err)
-            connection.execute('Insert Into `users` (`username`, `firstName`, `lastName`, `email`, `password`) VALUES(?, ?, ?, ?, ?)', [infos.username, infos.firstName, infos.lastName, infos.email, infos.password], (err, result) => {
+            connection.execute('Insert Into `users` (`username`, `firstName`, `lastName`, `email`, `password`, `redirect`, `passportId`) VALUES(?, ?, ?, ?, ?, ?, ?)', [infos.username, infos.firstName, infos.lastName, infos.email, infos.password, 'normal', null], (err, result) => {
                 if(err) reject(err)
                 else{
                     connection.release();

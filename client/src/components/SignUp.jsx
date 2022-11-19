@@ -12,8 +12,8 @@ const SignUp = () => {
 	const { t } = useTranslation();
 	const butts = [
 		{icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5", link: "/auth/google"},
-		{icon: GithubImg, path: "", color:"bg-white", size: "w-7 h-7", link: "/"},
-		{icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8", link: "/"}
+		{icon: GithubImg, path: "", color:"bg-white", size: "w-7 h-7", link: "/auth/github"},
+		{icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8", link: "/auth/42"}
 	  ]
 	  const initialValue = {
 		firstName: "",
@@ -110,7 +110,7 @@ const SignUp = () => {
 		<div className='flex  space-x-2 mb-5 w-60 xs:w-96'>
 			{butts.map((item, id) => {
 				return(
-					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} ` } onClick={() => window.open("http://localhost:3001/auth/google")}><img alt="google" src={item.icon} className={`${item.size}`}></img> </button>
+					<button key={id} className={`w-[33%] h-10 rounded-lg + ${item.color} ` } onClick={() => window.open(`http://localhost:3001${item.link}`)}><img alt="google" src={item.icon} className={`${item.size}`}></img> </button>
 			)})}
 		</div>
 	return (

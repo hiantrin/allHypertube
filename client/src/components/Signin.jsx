@@ -12,9 +12,9 @@ const Signin = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
   	const butts = [
-		{title: "Google", icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5"},
-		{title: "Github", icon: GithubImg, path: "", color:"bg-white text-black", size: "w-7 h-7"},
-		{title: "IntraImg", icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8"}
+		{title: "Google", icon: GoogleImg, path: "", color:"bg-red-800", size: "w-5 h-5", link: "/auth/google"},
+		{title: "Github", icon: GithubImg, path: "", color:"bg-white text-black", size: "w-7 h-7", link: "/"},
+		{title: "IntraImg", icon: IntraImg, path: "", color:"bg-cyan-500", size: "w-8 h-8", link: "/"}
   	]
 	const [infos, setInfos] = useState({email: "", password: ""});
 	const [errors, setErrors] = useState({})
@@ -93,7 +93,7 @@ const Signin = () => {
 		<div className='flex flex-col space-y-2 mb-5 w-full xs:w-96'>
 			{butts.map((item, id) => {
 				return(
-					<button key={id} className={`w-full h-10 + ${item.color} `}>{t('passport')} {item.title} <img alt="google" src={item.icon} className={`ml-3 + ${item.size}`}></img> </button>
+					<button key={id} className={`w-full h-10 + ${item.color} `} onClick={() => window.open(`http://localhost:3001${item.link}`)}>{t('passport')} {item.title} <img alt="google" src={item.icon} className={`ml-3 + ${item.size}`}></img> </button>
 			)})}
 		</div>
 

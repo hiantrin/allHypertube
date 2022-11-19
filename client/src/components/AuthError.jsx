@@ -8,17 +8,20 @@ const AuthError = () => {
 
     useEffect(() => {
         const showError= () => {
-            const error = {}
-            if (slug === "email Already exists")
-                error.error = `${slug} please select another email`
+            if(slug.substring(0, 10) === "authToken:")
+            {
+                const token = slug.substring(10);
+                localStorage.setItem('authToken', token);
+            }
             else
-                error.error = slug;
-            swal({
-                title: "Noooooooooop",
-                text : error.error,
-                icon : "error",
-                buttons : "close"
-            })
+            {
+                swal({
+                    title: "Noooooooooop",
+                    text : slug,
+                    icon : "error",
+                    buttons : "close"
+                })
+            }
             navigate('/signUp')
         }
         showError()
