@@ -102,3 +102,42 @@ These instructions will get you a copy of the project up and running on your loc
 ## Responsive
 
 > Home
+
+<img width="371" alt="Screen Shot 2022-11-30 at 15 01 59" src="https://user-images.githubusercontent.com/53905820/204817661-6ee94c6a-08b4-4075-a26f-85ff292ecf88.png">
+
+
+> Login
+
+<img width="369" alt="Screen Shot 2022-11-30 at 15 01 13" src="https://user-images.githubusercontent.com/53905820/204817923-64d6c412-aa52-4cf4-a03e-749605bf1a9e.png">
+
+> Register
+
+<img width="370" alt="Screen Shot 2022-11-30 at 15 02 37" src="https://user-images.githubusercontent.com/53905820/204818121-f40b66fd-644a-4985-98d8-96fb43ea8f31.png">
+
+> Forget Password
+
+<img width="366" alt="Screen Shot 2022-11-30 at 15 14 41" src="https://user-images.githubusercontent.com/53905820/204819226-7c1a42da-a28b-40ca-ac03-b77552462675.png">
+
+> Reset Password
+
+<img width="371" alt="Screen Shot 2022-11-30 at 15 15 41" src="https://user-images.githubusercontent.com/53905820/204819346-b6cd794e-b392-4289-9fad-63664dfce947.png">
+
+> Search
+
+<img width="367" alt="Screen Shot 2022-11-30 at 15 03 36" src="https://user-images.githubusercontent.com/53905820/204818250-04eda885-038e-4c7d-89aa-725674c782bf.png">
+
+
+> Movie
+
+<img width="367" alt="Screen Shot 2022-11-30 at 15 19 48" src="https://user-images.githubusercontent.com/53905820/204819985-b6a412c1-784a-43c4-b838-6e7552962b62.png">
+
+> Movie Stream
+
+
+> Profile
+
+<img width="369" alt="Screen Shot 2022-11-30 at 15 08 16" src="https://user-images.githubusercontent.com/53905820/204818393-51183464-d821-4306-ac49-a740228d7e50.png">
+
+> Edit Profile
+
+<img width="373" alt="Screen Shot 2022-11-30 at 15 08 44" src="https://user-images.githubusercontent.com/53905820/204818453-a6173c20-1f6f-49c1-a143-be59a6e794d1.png">
